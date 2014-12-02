@@ -1273,4 +1273,8 @@
     <string name="volume_panel_time_out_8sec">8 seconds</string>
     <string name="volume_panel_time_out_12sec">12 seconds</string>
     <string name="volume_panel_time_out_15sec">15 seconds</string>
+
+    <!-- Block QS on secure lock screen -->
+    <string name="block_on_secure_keyguard_title">Disable on lock screen</string>
+    <string name="block_on_secure_keyguard_summary">Disable quick settings on secure lock screen.</string>
 </resources>
