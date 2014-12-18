@@ -42,6 +42,12 @@
         android:title="@string/enable_quickboot_title"
         android:summary="@string/enable_quickboot_summary" />
 
+    <!-- Wakelock blocker -->
+    <PreferenceScreen
+        android:key="wakelock_blocker"
+        android:fragment="com.android.settings.temasek.WakeLockBlocker"
+        android:title="@string/wakelock_blocker_title" />
+
     <PreferenceScreen
             android:key="local_backup_password"
             android:title="@string/local_backup_password_title"
