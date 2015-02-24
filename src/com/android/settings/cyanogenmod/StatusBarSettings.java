@@ -48,12 +48,15 @@ public class StatusBarSettings extends SettingsPreferenceFragment
     private static final String STATUS_BAR_AM_PM = "status_bar_am_pm";
     private static final String STATUS_BAR_BATTERY_STYLE = "status_bar_battery_style";
     private static final String STATUS_BAR_SHOW_BATTERY_PERCENT = "status_bar_show_battery_percent";
+    private static final String KEY_STATUS_BAR_NETWORK_ARROWS= "status_bar_show_network_activity";
 
     private static final int STATUS_BAR_BATTERY_STYLE_HIDDEN = 4;
     private static final int STATUS_BAR_BATTERY_STYLE_TEXT = 6;
 
     private ListPreference mStatusBarClock;
     private ListPreference mStatusBarAmPm;
+    private SwitchPreference mNetworkArrows;
+
     private ListPreference mStatusBarBattery;
     private ListPreference mStatusBarBatteryShowPercent;
 
@@ -66,6 +69,16 @@ public class StatusBarSettings extends SettingsPreferenceFragment
 
         mStatusBarClock = (ListPreference) findPreference(STATUS_BAR_CLOCK_STYLE);
         mStatusBarAmPm = (ListPreference) findPreference(STATUS_BAR_AM_PM);
+
+        // Network arrows
+        mNetworkArrows = (SwitchPreference) prefSet.findPreference(KEY_STATUS_BAR_NETWORK_ARROWS);
+        mNetworkArrows.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
+            Settings.System.STATUS_BAR_SHOW_NETWORK_ACTIVITY, 1) == 1);
+        mNetworkArrows.setOnPreferenceChangeListener(this);
+        int networkArrows = Settings.System.getInt(getContentResolver(),
+                Settings.System.STATUS_BAR_SHOW_NETWORK_ACTIVITY, 1);
+        updateNetworkArrowsSummary(networkArrows);
+
         mStatusBarBattery = (ListPreference) findPreference(STATUS_BAR_BATTERY_STYLE);
         mStatusBarBatteryShowPercent =
                 (ListPreference) findPreference(STATUS_BAR_SHOW_BATTERY_PERCENT);
@@ -150,6 +163,14 @@ public class StatusBarSettings extends SettingsPreferenceFragment
             mStatusBarBatteryShowPercent.setSummary(
                     mStatusBarBatteryShowPercent.getEntries()[index]);
             return true;
+        } else if (preference == mNetworkArrows) {
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.STATUS_BAR_SHOW_NETWORK_ACTIVITY,
+                    (Boolean) objValue ? 1 : 0);
+            int networkArrows = Settings.System.getInt(getContentResolver(),
+                    Settings.System.STATUS_BAR_SHOW_NETWORK_ACTIVITY, 1);
+            updateNetworkArrowsSummary(networkArrows);
+            return true;
         }
         return false;
     }
@@ -161,6 +182,13 @@ public class StatusBarSettings extends SettingsPreferenceFragment
         } else {
             mStatusBarBatteryShowPercent.setEnabled(true);
         }
+    }
+
+    private void updateNetworkArrowsSummary(int value) {
+        String summary = value != 0
+                ? getResources().getString(R.string.enabled)
+                : getResources().getString(R.string.disabled);
+        mNetworkArrows.setSummary(summary);
     }
 
     public static final Indexable.SearchIndexProvider SEARCH_INDEX_DATA_PROVIDER =
