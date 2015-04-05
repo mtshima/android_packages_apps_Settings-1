@@ -114,6 +114,12 @@
                 android:persistent="false"
                 settings:advanced="true" />
 
+        <!-- Recent panel settings -->
+        <PreferenceScreen
+                android:key="recents_panel"
+                android:fragment="com.android.settings.temasek.RecentsPanelSettings"
+                android:title="@string/recents_panel_title"/>
+
         <!-- Cast screen -->
         <PreferenceScreen
                 android:key="wifi_display"
