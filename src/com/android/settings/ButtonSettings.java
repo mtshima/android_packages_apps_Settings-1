@@ -593,10 +593,10 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
                     Settings.System.VOLUME_KEY_CURSOR_CONTROL);
             return true;
         } else if (preference == mVolumeAnswerCall) {
-+            boolean value = (Boolean) newValue;
-+            Settings.System.putInt(getContentResolver(),
-+                   Settings.System.ANSWER_VOLUME_BUTTON_BEHAVIOR_ANSWER, value ? 1 : 0);
-+            return true;
+            boolean value = (Boolean) newValue;
+            Settings.System.putInt(getContentResolver(),
+                   Settings.System.ANSWER_VOLUME_BUTTON_BEHAVIOR_ANSWER, value ? 1 : 0);
+            return true;
         } else if (preference == mNavigationRecentsLongPressAction) {
             // RecentsLongPressAction is handled differently because it intentionally uses
             // Settings.System
